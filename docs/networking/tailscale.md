@@ -64,6 +64,31 @@ IP LAN:
 
 `192.168.1.100`
 
+## MagicDNS
+
+MagicDNS está habilitado para toda la tailnet.
+
+Sufijo de la tailnet:
+
+`tail082f93.ts.net`
+
+Los nodos pueden resolverse utilizando sus nombres cortos dentro de la tailnet.
+
+Ejemplos:
+
+- `vortex42-server`
+- `pi3-red`
+- `pi5-nube`
+
+También pueden utilizarse los nombres completos:
+
+- `vortex42-server.tail082f93.ts.net`
+- `pi3-red.tail082f93.ts.net`
+- `pi5-nube.tail082f93.ts.net`
+
+La resolución mediante nombres cortos fue verificada desde `vortex42-server`.
+
+
 ### Subnet Router
 
 Anuncia la red:
