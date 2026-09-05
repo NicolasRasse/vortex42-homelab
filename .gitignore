@@ -1,0 +1,62 @@
+# ============================================================
+# vortex42-homelab
+# Archivos que NO deben versionarse
+# ============================================================
+
+# --- Secretos y variables de entorno ---
+.env
+.env.*
+*.env
+secrets/
+*.key
+*.pem
+*.crt
+
+# --- Backups ---
+backups/
+*.bak
+*.backup
+*.tar
+*.tar.gz
+*.tgz
+
+# --- Descargas y archivos temporales ---
+downloads/
+temp/
+tmp/
+*.tmp
+
+# --- Logs ---
+*.log
+logs/
+
+# --- Bases de datos ---
+*.db
+*.sqlite
+*.sqlite3
+
+# --- Archivos comprimidos / imágenes de disco ---
+*.zip
+*.7z
+*.rar
+*.iso
+*.img
+
+# --- Python ---
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# --- Node.js ---
+node_modules/
+
+# --- Sistema / editores ---
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+
+# --- Docker runtime data ---
+docker/**/data/
+docker/**/logs/
