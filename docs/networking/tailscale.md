@@ -113,3 +113,23 @@ Configuración verificada:
 ```text
 net.ipv4.ip_forward = 1
 net.ipv6.conf.all.forwarding = 1
+
+
+## Redundancia de Subnet Router
+
+La red LAN `192.168.1.0/24` es anunciada por dos nodos:
+
+- `pi3-red`
+- `vortex42-server`
+
+Ambos tienen IP forwarding habilitado.
+
+Esto permite mantener acceso a dispositivos de la LAN mediante Tailscale si uno de los subnet routers deja de estar disponible.
+
+### vortex42-server
+
+Configuración verificada:
+
+```text
+net.ipv4.ip_forward = 1
+net.ipv6.conf.all.forwarding = 1
