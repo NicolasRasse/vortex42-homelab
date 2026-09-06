@@ -1,0 +1,12 @@
+- Infraestructura:
+    - Portainer:
+        href: https://192.168.1.117:9443
+        description: Gestión de contenedores Docker
+
+    - Immich:
+        href: http://192.168.1.88:2283
+        description: Biblioteca y backup de fotos
+
+    - Pi-hole:
+        href: http://192.168.1.100/admin
+        description: DNS y bloqueo de publicidad
