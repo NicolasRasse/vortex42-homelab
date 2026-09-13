@@ -1,0 +1,15 @@
+services:
+  gitea:
+    image: gitea/gitea:latest
+    container_name: gitea
+    restart: unless-stopped
+
+    ports:
+      - "3002:3000"
+      - "2222:22"
+
+    volumes:
+      - gitea_data:/data
+
+volumes:
+  gitea_data:

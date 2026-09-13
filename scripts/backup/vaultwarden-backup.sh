@@ -11,6 +11,40 @@ DATE="$(date '+%Y-%m-%d_%H-%M-%S')"
 BACKUP_NAME="vaultwarden_${DATE}.tar.gz"
 RETENTION_DAYS=14
 
+NTFY_URL="https://ntfy.vortex42.local/vortex42-alertas"
+
+notify() {
+  local title="$1"
+  local message="$2"
+  local priority="$3"
+
+  curl -fsS \
+    -H "Title: ${title}" \
+    -H "Priority: ${priority}" \
+    -d "${message}" \
+    "$NTFY_URL" >/dev/null || true
+}
+
+on_error() {
+  local exit_code=$?
+
+  notify \
+    "❌ Backup Vaultwarden falló" \
+    "El backup de Vaultwarden falló en vortex42-server. Código de salida: ${exit_code}" \
+    "5"
+
+  exit "$exit_code"
+}
+
+cleanup() {
+  if ! docker ps --format '{{.Names}}' | grep -qx "$CONTAINER"; then
+    echo "Reiniciando Vaultwarden..."
+    docker start "$CONTAINER" >/dev/null || true
+  fi
+}
+
+trap on_error ERR
+
 echo "=== Backup Vaultwarden ==="
 echo "Fecha: $(date)"
 
@@ -19,7 +53,7 @@ mkdir -p "$LOCAL_TMP"
 # Detectar el volumen montado en /data
 VOLUME="$(
   docker inspect "$CONTAINER" \
-  --format '{{range .Mounts}}{{if eq .Destination "/data"}}{{.Name}}{{end}}{{end}}'
+    --format '{{range .Mounts}}{{if eq .Destination "/data"}}{{.Name}}{{end}}{{end}}'
 )"
 
 if [ -z "$VOLUME" ]; then
@@ -35,13 +69,6 @@ ssh -i "$SSH_KEY" \
   -o ConnectTimeout=10 \
   "$REMOTE_HOST" \
   "mkdir -p '$REMOTE_DIR'"
-
-cleanup() {
-  if ! docker ps --format '{{.Names}}' | grep -qx "$CONTAINER"; then
-    echo "Reiniciando Vaultwarden..."
-    docker start "$CONTAINER" >/dev/null || true
-  fi
-}
 
 trap cleanup EXIT
 
@@ -75,3 +102,8 @@ echo
 echo "Backup completado correctamente:"
 ssh -i "$SSH_KEY" "$REMOTE_HOST" \
   "ls -lh '${REMOTE_DIR}/${BACKUP_NAME}'"
+
+notify \
+  "✅ Backup Vaultwarden OK" \
+  "Backup completado correctamente: ${BACKUP_NAME}" \
+  "3"
