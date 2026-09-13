@@ -7,8 +7,11 @@ services:
     ports:
       - "3000:3000"
 
+    env_file:
+      - .env
+
     environment:
-      HOMEPAGE_ALLOWED_HOSTS: "192.168.1.117:3000"
+      HOMEPAGE_ALLOWED_HOSTS: "192.168.1.117:3000,homepage.vortex42.local"
 
     volumes:
       - ./config:/app/config

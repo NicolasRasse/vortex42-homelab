@@ -1,12 +1,62 @@
 - Infraestructura:
-    - Portainer:
-        href: https://192.168.1.117:9443
-        description: Gestión de contenedores Docker
 
-    - Immich:
-        href: http://192.168.1.88:2283
-        description: Biblioteca y backup de fotos
+    - Portainer:
+        icon: portainer.png
+        href: https://portainer.vortex42.local
+        description: Gestión de contenedores Docker
+        siteMonitor: https://portainer.vortex42.local
+        widget:
+          type: portainer
+          url: http://192.168.1.117:9000
+          env: 3
+          key: "{{HOMEPAGE_VAR_PORTAINER_KEY}}"
+
+    - Uptime Kuma:
+        icon: uptime-kuma.png
+        href: https://uptime.vortex42.local
+        description: Monitoreo de servicios
+        siteMonitor: https://uptime.vortex42.local
+        widget:
+          type: uptimekuma
+          url: http://192.168.1.117:3001
+          slug: homelab
+
+    - Nginx Proxy Manager:
+        icon: nginx-proxy-manager.png
+        href: http://nginx.vortex42.local:81
+        description: Reverse proxy y HTTPS local
+        siteMonitor: http://nginx.vortex42.local:81
+        widget:
+          type: npm
+          url: http://192.168.1.117:81
+          username: "{{HOMEPAGE_VAR_NPM_USERNAME}}"
+          password: "{{HOMEPAGE_VAR_NPM_PASSWORD}}"
 
     - Pi-hole:
-        href: http://192.168.1.100/admin
-        description: DNS y bloqueo de publicidad
+        icon: pi-hole.png
+        href: http://pihole.vortex42.local/admin
+        description: DNS local y bloqueo de publicidad
+        siteMonitor: http://pihole.vortex42.local/admin
+        widget:
+          type: pihole
+          url: http://192.168.1.100
+          version: 6
+          key: "{{HOMEPAGE_VAR_PIHOLE_KEY}}"
+
+- Servicios:
+    - Immich:
+        icon: immich.png
+        href: https://immich.vortex42.local
+        description: Biblioteca y backup de fotos
+        siteMonitor: https://immich.vortex42.local
+        widget:
+          type: immich
+          url: http://192.168.1.88:2283
+          key: "{{HOMEPAGE_VAR_IMMICH_KEY}}"
+          version: 2
+
+    - Vaultwarden:
+        icon: bitwarden.png
+        href: https://vault.vortex42.local
+        description: Gestor de contraseñas
+        siteMonitor: https://vault.vortex42.local

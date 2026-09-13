@@ -1,12 +1,20 @@
----
-# For configuration options and examples, please see:
-# https://gethomepage.dev/configs/info-widgets/
-
 - resources:
+    label: Homepage
     cpu: true
     memory: true
     disk: /
+    uptime: true
+    refresh: 5000
 
 - search:
     provider: duckduckgo
+    focus: true
+    showSearchSuggestions: true
     target: _blank
+
+- datetime:
+    text_size: xl
+    locale: es
+    format:
+      dateStyle: long
+      timeStyle: short

@@ -2,3 +2,12 @@ title: Vortex42 Homelab
 theme: dark
 color: slate
 headerStyle: clean
+
+layout:
+  Infraestructura:
+    style: row
+    columns: 4
+
+  Servicios:
+    style: row
+    columns: 2

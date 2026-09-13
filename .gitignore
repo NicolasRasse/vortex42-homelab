@@ -60,3 +60,5 @@ Thumbs.db
 # --- Docker runtime data ---
 docker/**/data/
 docker/**/logs/
+.env
+*.env
