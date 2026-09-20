@@ -1,0 +1,29 @@
+services:
+  diun:
+    image: crazymax/diun:latest
+    container_name: diun
+    restart: unless-stopped
+
+    command: serve
+
+    volumes:
+      - diun_data:/data
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+
+    environment:
+      - TZ=America/Argentina/Buenos_Aires
+      - LOG_LEVEL=info
+      - LOG_JSON=false
+
+      - DIUN_WATCH_WORKERS=20
+      - DIUN_WATCH_SCHEDULE=0 */6 * * *
+      - DIUN_PROVIDERS_DOCKER=true
+      - DIUN_PROVIDERS_DOCKER_WATCHBYDEFAULT=true
+
+      - DIUN_NOTIF_NTFY_ENDPOINT=http://192.168.1.117:8083
+      - DIUN_NOTIF_NTFY_TOPIC=vortex42-alertas
+      - DIUN_NOTIF_NTFY_PRIORITY=3
+      - DIUN_NOTIF_NTFY_TOKEN=${DIUN_NTFY_TOKEN}
+
+volumes:
+  diun_data:

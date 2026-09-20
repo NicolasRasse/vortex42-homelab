@@ -1,62 +1,438 @@
+- Nodos:
+
+  - vortex42-server:
+      icon: mdi-server
+      href: https://beszel.vortex42.local
+      description: Servidor principal
+      widget:
+        type: beszel
+        url: http://192.168.1.117:8090
+        username: "{{HOMEPAGE_VAR_BESZEL_USERNAME}}"
+        password: "{{HOMEPAGE_VAR_BESZEL_PASSWORD}}"
+        systemId: vortex42-server
+        version: 2
+        fields:
+          - status
+          - cpu
+          - memory
+          - disk
+
+  - pi5-nube:
+      icon: mdi-raspberry-pi
+      href: https://beszel.vortex42.local
+      description: Nube · Immich
+      widget:
+        type: beszel
+        url: http://192.168.1.117:8090
+        username: "{{HOMEPAGE_VAR_BESZEL_USERNAME}}"
+        password: "{{HOMEPAGE_VAR_BESZEL_PASSWORD}}"
+        systemId: pi5-nube
+        version: 2
+        fields:
+          - status
+          - cpu
+          - memory
+          - disk
+
+  - pi3-red:
+      icon: mdi-raspberry-pi
+      href: https://beszel.vortex42.local
+      description: Red · Pi-hole
+      widget:
+        type: beszel
+        url: http://192.168.1.117:8090
+        username: "{{HOMEPAGE_VAR_BESZEL_USERNAME}}"
+        password: "{{HOMEPAGE_VAR_BESZEL_PASSWORD}}"
+        systemId: pi3-red
+        version: 2
+        fields:
+          - status
+          - cpu
+          - memory
+          - disk
+
+
+- Mantenimiento:
+
+  - Actualizaciones APT:
+      icon: mdi-package-up
+      description: Estado de actualizaciones del sistema
+      widget:
+        type: customapi
+        url: http://192.168.1.117:8091/status
+        refreshInterval: 30000
+        display: list
+        mappings:
+          - field: updates.server
+            label: vortex42-server
+            remap:
+              - value: 0
+                to: AL DÍA
+
+          - field: updates.pi5
+            label: pi5-nube
+            remap:
+              - value: 0
+                to: AL DÍA
+
+          - field: updates.pi3
+            label: pi3-red
+            remap:
+              - value: 0
+                to: AL DÍA
+
+          - field: updated_at
+            label: Último chequeo
+            format: relativeDate
+
+  - Backups:
+      icon: mdi-backup-restore
+      description: Estado de las copias de seguridad
+      widget:
+        type: customapi
+        url: http://192.168.1.117:8091/status
+        refreshInterval: 30000
+        display: list
+        mappings:
+          - field: backups.server.status
+            label: Server
+            remap:
+              - value: ok
+                to: OK
+              - value: stale
+                to: ATRASADO
+              - value: missing
+                to: SIN BACKUP
+            additionalField:
+              field: backups.server.last
+              format: relativeDate
+
+          - field: backups.immich.status
+            label: Immich
+            remap:
+              - value: ok
+                to: OK
+              - value: stale
+                to: ATRASADO
+              - value: missing
+                to: SIN BACKUP
+            additionalField:
+              field: backups.immich.last
+              format: relativeDate
+
+          - field: backups.pihole.status
+            label: Pi-hole
+            remap:
+              - value: ok
+                to: OK
+              - value: stale
+                to: ATRASADO
+              - value: missing
+                to: SIN BACKUP
+            additionalField:
+              field: backups.pihole.last
+              format: relativeDate
+
+          - field: backups.vaultwarden.status
+            label: Vaultwarden
+            remap:
+              - value: ok
+                to: OK
+              - value: stale
+                to: ATRASADO
+              - value: missing
+                to: SIN BACKUP
+            additionalField:
+              field: backups.vaultwarden.last
+              format: relativeDate
+
+
 - Infraestructura:
 
-    - Portainer:
-        icon: portainer.png
-        href: https://portainer.vortex42.local
-        description: Gestión de contenedores Docker
-        siteMonitor: https://portainer.vortex42.local
-        widget:
-          type: portainer
-          url: http://192.168.1.117:9000
-          env: 3
-          key: "{{HOMEPAGE_VAR_PORTAINER_KEY}}"
+  - Homepage:
+      icon: homepage.png
+      href: http://homepage.vortex42.local
+      description: Panel principal del homelab
+      siteMonitor: http://192.168.1.117:3000
 
-    - Uptime Kuma:
-        icon: uptime-kuma.png
-        href: https://uptime.vortex42.local
-        description: Monitoreo de servicios
-        siteMonitor: https://uptime.vortex42.local
-        widget:
-          type: uptimekuma
-          url: http://192.168.1.117:3001
-          slug: homelab
+  - Portainer:
+      icon: portainer.png
+      href: https://portainer.vortex42.local
+      description: Gestión de contenedores Docker
+      siteMonitor: http://192.168.1.117:9000
 
-    - Nginx Proxy Manager:
-        icon: nginx-proxy-manager.png
-        href: http://nginx.vortex42.local:81
-        description: Reverse proxy y HTTPS local
-        siteMonitor: http://nginx.vortex42.local:81
-        widget:
-          type: npm
-          url: http://192.168.1.117:81
-          username: "{{HOMEPAGE_VAR_NPM_USERNAME}}"
-          password: "{{HOMEPAGE_VAR_NPM_PASSWORD}}"
+  - Nginx Proxy Manager:
+      icon: nginx-proxy-manager.png
+      href: http://nginx.vortex42.local:81
+      description: Reverse proxy y gestión HTTPS
+      siteMonitor: http://192.168.1.117:81
 
-    - Pi-hole:
-        icon: pi-hole.png
-        href: http://pihole.vortex42.local/admin
-        description: DNS local y bloqueo de publicidad
-        siteMonitor: http://pihole.vortex42.local/admin
-        widget:
-          type: pihole
-          url: http://192.168.1.100
-          version: 6
-          key: "{{HOMEPAGE_VAR_PIHOLE_KEY}}"
+  - Pi-hole:
+      icon: pi-hole.png
+      href: http://pihole.vortex42.local/admin
+      description: DNS local y bloqueo de publicidad
+      ping: 192.168.1.100
+
+
+- Observabilidad:
+
+  - Uptime Kuma:
+      icon: uptime-kuma.png
+      href: https://uptime.vortex42.local
+      description: Estado general del homelab
+      siteMonitor: http://192.168.1.117:3001
+      widget:
+        type: uptimekuma
+        url: http://192.168.1.117:3001
+        slug: homelab
+        fields:
+          - up
+          - down
+          - uptime
+          - incident
+
+  - Beszel:
+      icon: beszel.png
+      href: https://beszel.vortex42.local
+      description: Estado de hosts y recursos
+      siteMonitor: http://192.168.1.117:8090
+
+  - Glances:
+      icon: glances.png
+      href: http://glances.vortex42.local
+      description: Métricas en tiempo real
+      siteMonitor: http://192.168.1.117:61208
+
+  - Dozzle:
+      icon: dozzle.png
+      href: https://dozzle.vortex42.local
+      description: Logs Docker en vivo
+      siteMonitor: http://192.168.1.117:8080
+
+  - ntfy:
+      icon: ntfy.png
+      href: https://ntfy.vortex42.local
+      description: Notificaciones del homelab
+      siteMonitor: http://192.168.1.117:8083
+
 
 - Servicios:
-    - Immich:
-        icon: immich.png
-        href: https://immich.vortex42.local
-        description: Biblioteca y backup de fotos
-        siteMonitor: https://immich.vortex42.local
-        widget:
-          type: immich
-          url: http://192.168.1.88:2283
-          key: "{{HOMEPAGE_VAR_IMMICH_KEY}}"
-          version: 2
 
-    - Vaultwarden:
-        icon: bitwarden.png
-        href: https://vault.vortex42.local
-        description: Gestor de contraseñas
-        siteMonitor: https://vault.vortex42.local
+  - Immich:
+      icon: immich.png
+      href: https://immich.vortex42.local
+      description: Fotos, videos y backups
+      siteMonitor: http://192.168.1.88:2283
+
+  - Vaultwarden:
+      icon: vaultwarden.png
+      href: https://vault.vortex42.local
+      description: Gestor de contraseñas
+      siteMonitor: http://192.168.1.117:8082
+
+  - Actual Budget:
+      id: static-status-actual
+      icon: actual-budget.png
+      href: https://actual.vortex42.local
+      description: Finanzas personales
+
+  - Gitea:
+      id: static-status-gitea
+      icon: gitea.png
+      href: https://git.vortex42.local
+      description: Repositorios Git locales
+
+  - File Browser:
+      id: static-status-files
+      icon: filebrowser.png
+      href: https://files.vortex42.local
+      description: Explorador de archivos web
+
+
+- Herramientas:
+
+  - IT Tools:
+      id: static-status-ittools
+      icon: it-tools.png
+      href: https://it-tools.vortex42.local
+      description: Herramientas técnicas rápidas
+
+
+- Red y DNS:
+
+  - MXToolbox:
+      id: static-status-mxtoolbox
+      icon: mdi-dns
+      href: https://mxtoolbox.com/SuperTool.aspx
+      description: DNS · MX · SMTP · diagnóstico
+
+  - DNS Checker:
+      id: static-status-dnschecker
+      icon: mdi-earth
+      href: https://dnschecker.org/
+      description: Propagación DNS global
+
+  - IPinfo:
+      id: static-status-ipinfo
+      icon: mdi-ip-network
+      href: https://ipinfo.io/
+      description: IP pública · ASN · proveedor
+
+  - Cloudflare Speed:
+      id: static-status-cloudflare
+      icon: mdi-speedometer
+      href: https://speed.cloudflare.com/
+      description: Latencia · jitter · velocidad
+
+
+- Web y SSL:
+
+  - SSL Labs:
+      id: static-status-ssllabs
+      icon: mdi-certificate-outline
+      href: https://www.ssllabs.com/ssltest/
+      description: Auditoría SSL · TLS · certificados
+
+  - Security Headers:
+      id: static-status-securityheaders
+      icon: mdi-shield-check-outline
+      href: https://securityheaders.com/
+      description: Headers HTTP · seguridad web
+
+  - Down For Everyone:
+      id: static-status-downforeveryone
+      icon: mdi-web-off
+      href: https://downforeveryoneorjustme.com/
+      description: Comprobar disponibilidad externa
+
+
+- APIs y Desarrollo:
+
+  - HTTPBin:
+      id: static-status-httpbin
+      icon: mdi-api
+      href: https://httpbin.org/
+      description: Pruebas HTTP · headers · APIs
+
+  - Webhook.site:
+      id: static-status-webhook
+      icon: mdi-webhook
+      href: https://webhook.site/
+      description: Capturar · inspeccionar · depurar webhooks
+
+  - Regex101:
+      id: static-status-regex
+      icon: mdi-regex
+      href: https://regex101.com/
+      description: Crear · probar · depurar expresiones regulares
+
+  - JSONLint:
+      id: static-status-jsonlint
+      icon: mdi-code-json
+      href: https://jsonlint.com/
+      description: Validar · formatear · reparar JSON
+
+
+- Seguridad:
+
+  - VirusTotal:
+      id: static-status-virustotal
+      icon: mdi-shield-search
+      href: https://www.virustotal.com/gui/home/url
+      description: Analizar URLs · archivos · amenazas
+
+  - URLScan:
+      id: static-status-urlscan
+      icon: mdi-web-search
+      href: https://urlscan.io/
+      description: Analizar requests · recursos · comportamiento web
+
+
+- Diagnóstico de red:
+
+  - CanYouSeeMe:
+      id: static-status-canyouseeme
+      icon: mdi-lan-check
+      href: https://www.canyouseeme.org/
+      description: Comprobar puertos públicos abiertos
+
+  - ICANN Lookup:
+      id: static-status-icann
+      icon: mdi-domain
+      href: https://lookup.icann.org/
+      description: Dominios · IP · ASN · registro
+
+  - BGP Toolkit:
+      id: static-status-bgp
+      icon: mdi-routes
+      href: https://bgp.he.net/
+      description: ASN · rutas · prefijos · looking glass
+
+  - IANA WHOIS:
+      id: static-status-iana
+      icon: mdi-database-search
+      href: https://www.iana.org/whois
+      description: WHOIS · dominios · IP · ASN
+
+
+- Accesos rápidos:
+
+  - Router:
+      id: static-status-router
+      icon: router.png
+      href: http://192.168.1.1
+      description: Administración del router
+
+  - Portainer por IP:
+      icon: portainer.png
+      href: https://192.168.1.117:9443
+      description: Acceso directo de emergencia
+      siteMonitor: http://192.168.1.117:9000
+
+  - Immich por Tailscale:
+      id: static-status-immich-ts
+      icon: immich.png
+      href: http://pi5-nube:2283
+      description: Acceso alternativo por Tailscale
+
+
+- Administración:
+
+  - GitHub:
+      id: static-status-github
+      icon: github.png
+      href: https://github.com/NicolasRasse/vortex42-homelab
+      description: Repositorio Vortex42 Homelab
+
+  - Tailscale Admin:
+      id: static-status-tailscale
+      icon: tailscale.png
+      href: https://login.tailscale.com/admin/machines
+      description: Gestión de dispositivos y red privada
+
+  - Docker Hub:
+      id: static-status-dockerhub
+      icon: docker.png
+      href: https://hub.docker.com/
+      description: Imágenes y registros Docker
+
+
+- Documentación:
+
+  - Homepage Docs:
+      id: static-status-homepage-docs
+      icon: homepage.png
+      href: https://gethomepage.dev/
+      description: Documentación oficial de Homepage
+
+  - Uptime Kuma Docs:
+      id: static-status-kuma-docs
+      icon: uptime-kuma.png
+      href: https://github.com/louislam/uptime-kuma
+      description: Documentación y proyecto Uptime Kuma
+
+  - Immich Docs:
+      id: static-status-immich-docs
+      icon: immich.png
+      href: https://immich.app/docs/
+      description: Documentación oficial de Immich

@@ -1,13 +1,93 @@
 title: Vortex42 Homelab
+language: es
 theme: dark
 color: slate
 headerStyle: clean
+hideVersion: true
+showStats: true
+statusStyle: dot
+
+quicklaunch:
+  searchDescriptions: true
+  hideInternetSearch: false
+  showSearchSuggestions: true
+
+fullWidth: true
+useEqualHeights: true
 
 layout:
+
+  Nodos:
+    tab: COMMAND
+    style: row
+    columns: 3
+
+  Mantenimiento:
+    tab: COMMAND
+    style: row
+    columns: 2
+
   Infraestructura:
+    tab: COMMAND
+    style: row
+    columns: 4
+
+  Observabilidad:
+    tab: COMMAND
     style: row
     columns: 4
 
   Servicios:
+    tab: SERVICIOS
+    style: row
+    columns: 4
+
+  Herramientas:
+    tab: TOOLBOX
+    style: row
+    columns: 4
+
+  Utilidades:
+    tab: TOOLBOX
+    style: row
+    columns: 3
+
+  Accesos rápidos:
+    tab: ADMIN
+    style: row
+    columns: 4
+
+  Administración:
+    tab: ADMIN
+    style: row
+    columns: 3
+
+  Documentación:
+    tab: ADMIN
+    style: row
+    columns: 3
+
+  Red y DNS:
+    tab: TOOLBOX
+    style: row
+    columns: 4
+
+  Web y SSL:
+    tab: TOOLBOX
+    style: row
+    columns: 3
+
+  APIs y Desarrollo:
+    tab: TOOLBOX
+    style: row
+    columns: 4
+
+  Seguridad:
+    tab: TOOLBOX
     style: row
     columns: 2
+
+  Diagnóstico de red:
+    tab: TOOLBOX
+    style: row
+    columns: 4

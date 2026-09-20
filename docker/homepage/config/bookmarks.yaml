@@ -1,18 +1,36 @@
----
-# For configuration options and examples, please see:
-# https://gethomepage.dev/configs/bookmarks
+- Red y DNS:
+    - MXToolbox:
+        - abbr: MX
+          href: https://mxtoolbox.com/SuperTool.aspx
+          description: DNS, MX, blacklist, SMTP y TCP
 
-- Developer:
-    - Github:
-        - abbr: GH
-          href: https://github.com/
+    - SSL Labs:
+        - abbr: SL
+          href: https://www.ssllabs.com/ssltest/
+          description: Análisis SSL/TLS de servicios públicos
 
-- Social:
-    - Reddit:
-        - abbr: RE
-          href: https://reddit.com/
+- Seguridad:
+    - VirusTotal:
+        - abbr: VT
+          href: https://www.virustotal.com/gui/home/url
+          description: Analizar URLs y archivos sospechosos
 
-- Entertainment:
-    - YouTube:
-        - abbr: YT
-          href: https://youtube.com/
+    - URLScan:
+        - abbr: US
+          href: https://urlscan.io/
+          description: Analizar comportamiento de sitios web
+
+    - Webhook.site:
+        - abbr: WH
+          href: https://webhook.site/
+          description: Capturar y depurar webhooks
+
+    - Regex101:
+        - abbr: RX
+          href: https://regex101.com/
+          description: Probar y depurar expresiones regulares
+
+    - JSONLint:
+        - abbr: JS
+          href: https://jsonlint.com/
+          description: Validar y reparar JSON

@@ -10,6 +10,17 @@ services:
     ports:
       - "8083:80"
 
+    environment:
+      NTFY_BASE_URL: "https://ntfy.vortex42.local"
+      NTFY_AUTH_FILE: "/etc/ntfy/auth.db"
+      NTFY_AUTH_DEFAULT_ACCESS: "deny-all"
+      NTFY_ENABLE_LOGIN: "true"
+      NTFY_BEHIND_PROXY: "true"
+
+      NTFY_CACHE_FILE: "/var/cache/ntfy/cache.db"
+      NTFY_CACHE_DURATION: "7d"
+
+
     volumes:
       - ntfy_cache:/var/cache/ntfy
       - ntfy_config:/etc/ntfy
